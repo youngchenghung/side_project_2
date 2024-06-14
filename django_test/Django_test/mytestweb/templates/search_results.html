@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Results</title>
+</head>
+<body>
+    <h1>Search Results</h1>
+    <table border="1">
+        <tr>
+            <th>Category</th>
+            <th>Title</th>
+            <th>Pop</th>
+            <th>Author</th>
+            <th>Date</th>
+            <th>Current Page Index</th>
+        </tr>
+        {% for row in result %}
+        <tr>
+            <td>{{ row.category }}</td>
+            <td>{{ row.title }}</td>
+            <td>{{ row.pop }}</td>
+            <td>{{ row.author }}</td>
+            <td>{{ row.date }}</td>
+            <td>{{ row.current_page_index }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

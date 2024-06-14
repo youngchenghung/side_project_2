@@ -105,6 +105,44 @@
         <label for="grap">Grap</label>
       </form>
     </section>
+
+    <section>
+      <p>Input Category and Ttitle</p>
+      <form method="get" action="/search_title/">
+        <p>Title: <input type="text" name="title">
+        <br>
+        <p><input type="submit" name="button" value="Submit"/>
+      </form>
+    </section>
+    <h1>Search Results</h1>
+    {% if data %}
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Title</th>
+                    <th>Pop</th>
+                    <th>Author</th>
+                    <th>Date</th>
+                    <th>Current Page Index</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in data %}
+                    <tr>
+                        <td>{{ item.category }}</td>
+                        <td>{{ item.title }}</td>
+                        <td>{{ item.pop }}</td>
+                        <td>{{ item.author }}</td>
+                        <td>{{ item.date }}</td>
+                        <td>{{ item.current_page_index }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
   </main>
 
   <footer>
