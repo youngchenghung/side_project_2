@@ -1,18 +1,18 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.http import JsonResponse
-import json
 import datetime
 import pymysql
-import io
+import os
 import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('Agg')  # 使用非 GUI 後端
-import matplotlib.pyplot as plt
-from matplotlib.font_manager import FontProperties
-from django.http import HttpResponse
 from datetime import datetime
 from collections import Counter
+import seaborn as sns
+import pandas as pd
+import jieba
+import jieba.analyse
+
 
 
 # Create your views here.
@@ -39,7 +39,7 @@ def insert_data(request):
 
         try:
             with conn.cursor() as cursor:
-                sql = "INSERT INTO PTT_Gossiping_data (category, title, pop, author, date, current_page_index) VALUES (%s, %s, %s, %s, %s, %s)"
+                sql = """INSERT INTO PTT_Gossiping_data (category, title, pop, author, date, current_page_index) VALUES (%s, %s, %s, %s, %s, %s)"""
                 cursor.execute(sql, (category, title, pop, author, date, current_page_index))
                 conn.commit()
             return HttpResponse("Data inserted successfully!")
@@ -71,7 +71,7 @@ def search_title(request):
 
         try:
             with conn.cursor() as cursor:
-                sql = "SELECT * FROM PTT_Gossiping_data WHERE Title LIKE %s"
+                sql = """SELECT * FROM PTT_Gossiping_data WHERE Title LIKE %s"""
                 value = "%" + title + "%"
                 cursor.execute(sql, (value,))
                 result = cursor.fetchall()
@@ -89,6 +89,9 @@ def search_title(request):
 
 def page_4(request):
     return render(request, 'page_4.html')
+
+def search_form(request):
+    return render(request, 'search_form.html')
 
 def plot_category(request):
 
@@ -119,7 +122,10 @@ def plot_category(request):
         WHERE Date BETWEEN %s AND %s
         """
         cursor.execute(sql, (start_date, end_date))
+        conn.commit()
         results = cursor.fetchall()
+    
+    print(results)
 
     # 生成 Category 的直方圖    
     # 設定字型
@@ -158,7 +164,7 @@ def plot_category(request):
     plt.title('PTT八卦版 一月文章類別分布')
     
     file_name = f"plot_{datetime.now().strftime('%Y%m%d')}.png"
-    file_path = '/Users/leo/Documents/side_project_2-1/django_test/Django_test/mytestweb/static/' + file_name
+    file_path =os.getcwd() + '/mytestweb/static/matplotlib/' + file_name
 
     plt.savefig(file_path)
     plt.close()
@@ -166,5 +172,146 @@ def plot_category(request):
 
     return render(request, 'search_form.html', {'file_url': file_url})
 
-def search_form(request):
-    return render(request, 'search_form.html')
+def search_heatmap(request):
+    return render(request, 'search_heatmap.html')
+
+def get_heatmap_result(request):
+
+    if request.method == 'GET':
+        start_date = request.GET.get('start_date')
+        end_date = request.GET.get('end_date')
+
+        # 確認用戶輸入
+        if not start_date or not end_date:
+            return HttpResponse("Invalid input.")
+
+        # 連接MySQL資料庫
+        conn = pymysql.connect(
+            host='localhost',
+            user='root',
+            password='11111111',
+            db='PTT_raw_data',
+            charset='utf8mb4',
+            cursorclass=pymysql.cursors.DictCursor
+        )
+
+    with conn.cursor() as cursor:
+        sql = """
+        SELECT Pop, 
+        Date 
+        FROM PTT_Gossiping_data 
+        WHERE Date BETWEEN %s AND %s
+        """
+        cursor.execute(sql, (start_date, end_date))
+        results = cursor.fetchall()
+        conn.commit()
+
+        processed_results = [
+            {
+            'Pop': result['Pop'],
+            'Month': result['Date'][:-2],
+            'Day': result['Date'][-2:]
+            }
+            for result in results
+        ]
+
+    # 將資料庫資料轉換成適合繪製熱力圖的格式
+    df = pd.DataFrame(processed_results, columns=['Pop', 'Month', 'Day'])
+    heatmap_data = df.pivot_table(index='Month', columns='Day', values='Pop', aggfunc='sum', fill_value=0)
+
+    # 繪製熱力圖
+    plt.rcParams["font.family"] = 'Arial Unicode MS'
+    plt.figure(figsize=(12, 8))
+    sns.heatmap(heatmap_data,  fmt="d", cmap='coolwarm')
+    plt.title(f'{start_date}至{end_date}文章數的熱力圖表') 
+    plt.yticks(rotation=0)
+    plt.ylabel('單位：月')
+    plt.xlabel('單位：日')
+    plt.show()
+
+    file_name = f"heatmap_{datetime.now().strftime('%Y%m%d_%s')}.png"
+    file_path =os.getcwd() + '/mytestweb/static/matplotlib/' + file_name
+
+    plt.savefig(file_path)
+    plt.close()
+    file_url = f'/static/{file_name}'
+    return render(request, 'search_heatmap.html', {'file_url': file_url})
+
+def search_keyword(request):
+    return render(request, 'search_keyword.html')
+
+def get_keyword_result(request):
+
+    if request.method == 'GET':
+        start_date = request.GET.get('start_date')
+        end_date = request.GET.get('end_date')
+
+        # 確認用戶輸入
+        if not start_date or not end_date:
+            return HttpResponse("Invalid input.")
+
+        # 連接MySQL資料庫
+        conn = pymysql.connect(
+            host='localhost',
+            user='root',
+            password='11111111',
+            db='PTT_raw_data',
+            charset='utf8mb4',
+            cursorclass=pymysql.cursors.DictCursor
+        )
+
+    # 讀取資料
+    with conn.cursor() as cursor:
+        sql ="SELECT Title FROM PTT_Gossiping_data WHERE date BETWEEN %s AND %s"
+        cursor.execute(sql, (start_date, end_date))
+        result = cursor.fetchall()
+
+    # 读取CSV文件
+    df = pd.read_csv('test/temp_title_data.csv')  # 请将文件名替换为你的CSV文件名
+
+    # 加载自定义词库和停用字
+    # jieba.load_userdict("dict.txt.big")  # 加载预设词库
+    jieba.set_dictionary("test/custom_names.txt")  # 加载自定义人名词典
+    with open("test/stop_words.txt", "r", encoding="utf-8") as f:  # 读取停用字文件
+        stopwords = f.read().splitlines()
+
+    # 假设文本数据在'Title'列中
+    texts = df['Title'].tolist()
+
+    # 进行分词
+    segmented_texts = []
+
+    # 遍历每个文本，对其进行分词并过滤停用词和单个字的词语，然后连接成字符串，存入segmented_texts中
+    for text in texts:
+        # 将文本进行分词
+        segmented_words = jieba.cut(text, use_paddle=True)
+        # 过滤停用词和单个字的词语
+        filtered_segmented_words = []
+        for word in segmented_words:
+            if word not in stopwords and len(word) > 1:  # 过滤停用词和单个字的词语
+                filtered_segmented_words.append(word)
+        # 将分词后的词语列表连接成字符串，以空格分隔
+        segmented_string = ' '.join(filtered_segmented_words)
+        # 将连接后的字符串添加到segmented_texts列表中
+        segmented_texts.append(segmented_string)
+
+    # 删除只出现一次的词语
+    all_words = ' '.join(segmented_texts).split()
+    word_counts = Counter(all_words)
+    filtered_words = [word for word in all_words if word_counts[word] > 1]
+
+    # 将分词结果添加到数据框中
+    df['segmented_content'] = segmented_texts
+    # print(df.head())  # 打印前5行数据，检查结果
+
+    # 进行词频统计
+    word_counts = Counter(filtered_words)
+
+    # 打印出现次数最多的10个词
+    top_10_word_counts = word_counts.most_common(10)
+    # print(type(word_counts.most_common(10)))
+
+    # 保存分词结果到新的CSV文件
+    df.to_csv('test/segmented_output.csv', index=False)
+
+    return top_10_word_counts

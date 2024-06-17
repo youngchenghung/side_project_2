@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from mytestweb.views import index, page_2, page_3, page_4, insert_data, search_title, search_form, plot_category
+from mytestweb.views import index, page_2, page_3, page_4, insert_data, search_title, search_form, plot_category, search_heatmap, get_heatmap_result
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,5 +27,7 @@ urlpatterns = [
     path('insert_data/' , insert_data, name='insert_data'),
     path('search_title/', search_title, name='search_title'),
     path('search_form/', search_form, name='search_form'),
-    path('plot_category/', plot_category, name='plot_category')
+    path('plot_category/', plot_category, name='plot_category'),
+    path('search_heatmap/', search_heatmap, name='search_heatmap'),
+    path('get_heatmap_result/', get_heatmap_result, name='get_heatmap_result')
 ]
