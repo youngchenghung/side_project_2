@@ -12,13 +12,13 @@
       padding: 0;
     }
     header {
-      background-color: #333;
+      background-color: #0c0a66;
       color: #fff;
       padding: 10px;
       text-align: center;
     }
     nav {
-      background-color: #f2f2f2;
+      background-color: #626262;
       padding: 10px;
     }
     nav ul {
@@ -29,25 +29,22 @@
     }
     nav ul li {
       display: inline;
-      margin-right: 10px;
+      margin-right: 20px;
     }
     main {
       padding: 20px;
+      background-color: #000000;
     }
     section {
       margin-bottom: 20px;
       padding: 10px;
-      background-color: #f9f9f9;
-    }
-    aside {
-      float: right;
-      width: 30%;
-      background-color: #f2f2f2;
-      padding: 10px;
-      margin-top: 10px;
+      background-color: #232323;
+      text-align: left;
+      width: 60%;
+      margin: auto;
     }
     footer {
-      background-color: #333;
+      background-color: #000000;
       color: #fff;
       padding: 10px;
       text-align: center;
@@ -56,6 +53,7 @@
       width: 100%;
     }
   </style>
+
 </head>
 <body>
   <header>
@@ -63,6 +61,7 @@
   </header>
   
   <nav>
+    <font color="white">
     <ul>
       <li><a href="/" title="首頁">首頁</a></li>
       <li><a href="/page_2" title="頁面二">頁面二</a></li>
@@ -72,46 +71,65 @@
       <li><a href="/search_heatmap" title="search_heatmap">search_heatmap</a></li>
       <li><a href="/search_keyword" title="search_keyword">search_keyword</a></li>
     </ul>
+    </font>
   </nav>
   
   <main>
     <section>
-      <h2>主題區塊一</h2>
-      <p>這是主題區塊一的內容。</p>
-      <form action="/test.aspx" method="post">
-        <label for="date">選擇日期:</label>
-        <input type="date" id="date" name="date" value="2024-01-01">
-        <br>
-      </form>
-    </section>
-    
-    <section>
-      <h2>主題區塊二</h2>
-      <p>這是主題區塊二的內容。</p>
-      <form action="/test.aspx" method="post">
-        <label>選擇一個選項:</label>
-        <br>
-        <input type="radio" id="apple" name="a" value="apple">
-        <label for="apple">Apple</label>
-        <input type="radio" id="ball" name="a" value="ball">
-        <label for="ball">Ball</label>
-        <input type="radio" id="cat" name="a" value="cat">
-        <label for="cat">Cat</label>
-        <br>
-        <label>選擇多個選項:</label>
-        <br>
-        <input type="checkbox" id="orange" name="b" value="orange">
-        <label for="orange">Orange</label>
-        <input type="checkbox" id="banana" name="b" value="banana">
-        <label for="banana">Banana</label>
-        <input type="checkbox" id="grap" name="b" value="grap">
-        <label for="grap">Grap</label>
-      </form>
+      <p><font color="gray">
+      <h2>分析PPT論壇</h2>
+      <hr>
+      <p>台灣的PTT（批踢踢實業坊）是台灣極具影響力的網路論壇，涵蓋了廣泛的討論主題。八卦版（Gossiping）是其中最受歡迎的版面之一，匯聚了各式各樣的熱門話題。</p>
+      <p>為了深入了解八卦版的討論趨勢，我們可以使用爬蟲技術來蒐集關鍵資料，並進行數據分析。</p>
+      <p>以下介紹如何利用爬蟲技術蒐集資料及可能得出的有效數據。</p>
+      <br>
+      <h2>爬蟲蒐集資料</h2>
+      <hr>
+      <p>爬蟲是一種自動化工具，能夠模擬人類瀏覽網頁的行為，並從中提取需要的資訊。在PTT八卦版，我們可以蒐集以下幾類資料：</p>
+      <ul>
+        <li>文章類別：文章的分類，如[討論]、[新聞]、[問卦]等等。</li>
+        <li>文章標題：每篇文章的標題，反映出文章的主題內容。</li>
+        <li>熱門度：文章的推噓數量，代表文章的受歡迎程度。</li>
+        <li>作者：發表文章的用戶ID。</li>
+        <li>日期：文章發表的日期時間。</li>
+      </ul>
+      <br>
+      <h2>資料分析</h2>
+      <hr>
+      <p>獲取到上述資料後，我們可以進行多種數據分析，得出有價值的洞見：</p>
+      <ul>
+        <li>熱門話題分析：</li>
+        <p>透過文章標題和熱門度，可以分析出哪些話題在特定時間段內最受關注。</p>
+        <p>可以生成關鍵詞雲，視覺化展示最常出現的熱門詞彙。</p>
+        <li>討論熱度趨勢：
+        <p>分析不同時間段（如每天、每週、每月）的熱門度變化，了解八卦版的討論熱度走勢。</p>
+        <p>發現討論熱點的高峰時期，並探討其背後的原因。</p>
+        <li>討論熱度趨勢：</li>
+        <p>分析不同時間段（如每天、每週、每月）的熱門度變化，了解八卦版的討論熱度走勢。</p>
+        <p>發現討論熱點的高峰時期，並探討其背後的原因。</p>
+        <li>文章類別分佈：</li>
+        <p>分析不同文章類別所佔的比例，了解八卦版的主要討論方向。</p>
+        <p>探討不同類別文章的熱門度，找出最受歡迎的文章類別。</p>
+        <li>活躍作者分析：</li>
+        <p>找出發文最多或最受歡迎的作者，了解他們的發文習慣和影響力。</p>
+        <p>分析這些作者的發文時間、頻率，探討他們成功的秘訣。</p>
+        <li>日期與時間分析：</li>
+        <p>分析文章發表的時間分佈，了解哪些時間段的發文數量最多。</p>
+        <p>探討熱門文章是否集中在某些特定時間點發表。</p>
+        </li>
+      </ul>
+      <br>
+      <h2>實際應用</h2>
+      <hr>
+      <p>透過這些分析，可以為市場研究、社會輿情監測、品牌推廣等提供有力的數據支持。例如，企業可以根據熱門話題來制定市場營銷策略，媒體可以根據討論熱點進行新聞報導，研究機構可以根據數據趨勢進行社會研究。</p>
+      <p>總之，利用爬蟲技術從PTT八卦版蒐集資料並進行數據分析，能夠挖掘出大量有價值的資訊，為各類研究和實踐提供重要參考。</p>
+
+    </font></p>
     </section>
   </main>
 
   <footer>
-    <p>頁尾</p>
+    <p>不懂切記勿裝懂，去搞懂學習與詢問</p>
   </footer>
 </body>
 </html>
