@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>首頁</title>
+</head>
+<body>
+  <header>
+    <h1>首頁</h1>
+  </header>
+  
+  <nav>
+    <font color="white">
+    <ul>
+      <li><a href="/" title="首頁">首頁</a></li>
+      <li><a href="/page_2" title="頁面二">頁面二</a></li>
+      <li><a href="/page_3" title="頁面三">頁面三</a></li>
+      <li><a href="/page_4" title="頁面四">頁面四</a></li>
+      <li><a href="/search_form" title="search_form">search_form</a></li>
+      <li><a href="/search_heatmap" title="search_heatmap">search_heatmap</a></li>
+      <li><a href="/search_keyword" title="search_keyword">search_keyword</a></li>
+    </ul>
+    </font>
+  </nav>
+
+{% block content %}{% endblock %}
+
+  <footer>
+    <p>尾頁</p>
+  </footer>
+</body>
+</html>
