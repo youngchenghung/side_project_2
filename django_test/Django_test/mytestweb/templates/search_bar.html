@@ -6,42 +6,66 @@
     <section>
       <p><font color="gray">
       <h2>長條圖</h2>
+      <hr>
+      <br
       <p>文章類別分佈：</p>
-      <p>分析不同文章類別所佔的比例，了解八卦版的主要討論方向。</p>
-      <p>探討不同類別文章的熱門度，找出最受歡迎的文章類別。</p>
+      <ul>
+        <li>分析不同文章類別所佔的比例，了解八卦版的主要討論方向。</li>
+        <li>探討不同類別文章的熱門度，找出最受歡迎的文章類別。</li>
+      </ul>
       <br>
-      <form id="search-form" method="get" action="/get_bar_result/">
-        <input type="checkbox" id="january" name="january" value="january">
-        <label for="january">January</label>
-        <input type="checkbox" id="february" name="february" value="february">
-        <label for="february">February</label>
-        <input type="checkbox" id="march" name="march" value="march">
-        <label for="march">March</label>
-        <input type="checkbox" id="april" name="april" value="april">
-        <label for="april">April</label>
-        <input type="checkbox" id="may" name="may" value="may">
-        <label for="may">May</label>
-        <input type="checkbox" id="june" name="june" value="june">
-        <label for="june">June</label>
+      <p>通過分析不同文章類別所佔的比例，我們可以清楚地了解八卦版的主要討論方向。</p>
+      <p>以下是根據蒐集到的數據製作的文章類別分佈長條圖：</p>
+      <br>
+      <br>
+      <picture>
+        <source srcset="{% static 'matplotlib_file/bar_result_simple.png' %}" media="(min-width: 300px)">
+        <img src="{% static 'matplotlib_file/bar_result_simple.png' %}" alt="bar chart">
+      </picture>
+      <br>
+      <br>
+      <p>此圖表顯示了各類別文章在八卦版中所佔的比例。</p>
+      <p>例如，若討論類文章佔比最高，則說明用戶在八卦版中更傾向於進行交流和討論。</p>
+      <p>除了了解文章類別的分佈外，我們還可以探討不同類別文章的熱門度，找出最受歡迎的文章類別。</p>
+      <br>
+      <h2>結論</h2>
+      <hr>
+      <p>透過上述長條圖的分析，我們可以得出以下結論：</p>
+      <p>通過文章類別分佈長條圖，我們了解到了八卦版的主要討論方向。例如，若問卦文章佔比最大，則說明用戶喜歡在八卦版進行交流和分享觀點。</p>
+      <br>
+      <h2>查詢</h2>
+      <hr>
+      <br>
+        <form id="search-form" method="get" action="/get_bar_result/">
+        <label for="month">月份:</label>
+        <select name="month" id="month">
+            <option value="所有">所有</option>
+            <option value="一月">一月</option>
+            <option value="二月">二月</option>
+            <option value="三月">三月</option>
+            <option value="四月">四月</option>
+            <option value="五月">五月</option>
+            <option value="六月">六月</option>
+        </select>
         <br>
         <br>
-        <label for="start_date">Start Date:</label>
+        <label for="start_date">起始日:</label>
         <input type="text" id="start_date" name="start_date">
-        <label for="end_date">End Date:</label>
+        <br>
+        <br>
+        <label for="end_date">結束日:</label>
         <input type="text" id="end_date" name="end_date">
         <br>
         <br>
-        <button type="submit">Submit</button>
-      </form>
-        
+        <button type="submit">送出</button>
         </font></p>
-    </form>
+      </form>
 
-    <div id="bar-container">
-        {% if file_url %}
-            <img id="bar-image" src="{{ file_url }}" alt="bar image">
-        {% endif %}
-    </div>
+      <div id="bar-container">
+          {% if file_url %}
+              <img id="bar-image" src="{{ file_url }}" alt="bar image">
+          {% endif %}
+      </div>
     </section>
   </main>
 {% endblock %}

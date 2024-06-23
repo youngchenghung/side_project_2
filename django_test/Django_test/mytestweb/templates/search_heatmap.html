@@ -3,23 +3,66 @@
 
 {% block content %}
 
-  <main>
-    <section>
-      <h2>主題區塊二</h2>
-      <p>這是主題區塊二的內容。</p>
+<main>
+  <section>
+    <p><font color="gray">
+    <h2>熱力圖</h2>
+    <hr>
+    <br
+    <p>日期與發文數量分析:</p>
+    <ul>
+      <li>分析文章發表的時間分佈，了解哪些時間段的發文數量最多。</li>
+      <li>探討熱門文章是否集中在某些特定時間點發表。</li>
+    </ul>
+    <br>
+    <p>首先，我們蒐集了八卦版中所有文章的發表日期和時間。將這些數據進行整理和統計後，我們可以製作出一張熱力圖，展示每天不同時間段的發文數量。</p>
+    <p>熱力圖能夠直觀地顯示出發文數量的高峰和低谷。</p>
+    <br>
+    <br>
+    <img src="{% static 'matplotlib_file/heatmap_result_simple.png' %}" alt="heatmap chart">
+    <br>
+    <br>
+    <p>這張熱力圖顯示了不同日期的發文數量情況。顏色越紅代表發文數量越多，顏色越藍則代表發文數量越少。</p>
+    <br>
+    <img src="{% static 'matplotlib_file/heatmap_search_simple.png' %}" alt="heatmap chart">
+    <br>
+    <h2>結論</h2>
+    <hr>
+    <p>熱門文章集中時間：通過熱門文章時間點熱力圖，我們可以觀察到熱門文章是否集中在某些特定時間段發表。</p>
+    <br>
+    <h2>查詢</h2>
+    <hr>
+    <br>
       <form id="search-heatmap" method="get" action="/get_heatmap_result/">
-        <label for="start_date">Start Date:</label>
+        <label for="month">月份:</label>
+        <select name="month" id="month">
+            <option value="所有">所有</option>
+            <option value="一月">一月</option>
+            <option value="二月">二月</option>
+            <option value="三月">三月</option>
+            <option value="四月">四月</option>
+            <option value="五月">五月</option>
+            <option value="六月">六月</option>
+        </select>
+        <br>
+        <br>
+        <label for="start_date">起始日:</label>
         <input type="text" id="start_date" name="start_date">
-        <label for="end_date">End Date:</label>
+        <br>
+        <br>
+        <label for="end_date">結束日:</label>
         <input type="text" id="end_date" name="end_date">
-        <button type="submit">Submit</button>
-    </form>
+        <br>
+        <br>
+        <button type="submit">送出</button>
+        </font></p>
+      </form>
 
-    <div id="Heatmap-container">
-        {% if file_url %}
-            <img id="Heatmap-image" src="{{ file_url }}" alt="Heatmap Image">
-        {% endif %}
-    </div>
+      <div id="heatmap-container">
+          {% if file_url %}
+              <img id="heatmap-image" src="{{ file_url }}" alt="heatmap image">
+          {% endif %}
+      </div>
     </section>
   </main>
 

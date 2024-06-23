@@ -11,13 +11,34 @@ import seaborn as sns
 import pandas as pd
 
 def draw_heatmap(request):
+
     if request.method == 'GET':
         start_date = request.GET.get('start_date')
         end_date = request.GET.get('end_date')
+        month = request.GET.get('month')
 
-        # 確認用戶輸入
-        if not start_date or not end_date:
-            return HttpResponse("Invalid input.")
+        if month == ('一月'):
+            start_date = 100 + int(start_date)
+            end_date = 100 + int(end_date)
+        elif month == ('二月'):
+            start_date = 200 + int(start_date)
+            end_date = 200 + int(end_date)
+        elif month == ('三月'):
+            start_date = 300 + int(start_date)
+            end_date = 300 + int(end_date)
+        elif month == ('四月'):
+            start_date = 400 + int(start_date)
+            end_date = 400 + int(end_date)
+        elif month == ('五月'):
+            start_date = 500 + int(start_date)
+            end_date = 500 + int(end_date)
+        elif month == ('六月'):
+            start_date = 600 + int(start_date)
+            end_date = 600 + int(end_date)
+        elif month == ('所有'):
+            start_date = 100 + int(start_date)
+            end_date = 600 + int(end_date)
+
 
         # 連接MySQL資料庫
         conn = pymysql.connect(
@@ -57,7 +78,7 @@ def draw_heatmap(request):
     plt.rcParams["font.family"] = 'Arial Unicode MS'
     plt.figure(figsize=(12, 8))
     sns.heatmap(heatmap_data,  fmt="d", cmap='coolwarm')
-    plt.title(f'{start_date}至{end_date}文章數的熱力圖表') 
+    plt.title(f'{month}文章數的熱力圖表') 
     plt.yticks(rotation=0)
     plt.ylabel('單位：月')
     plt.xlabel('單位：日')

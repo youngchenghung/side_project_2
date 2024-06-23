@@ -12,40 +12,38 @@ import pandas as pd
 from collections import Counter
 
 def draw_bar_chart(request):
-    file_url = None
 
 
     if request.method == 'GET':
         start_date = request.GET.get('start_date')
         end_date = request.GET.get('end_date')
+        month = request.GET.get('month')
 
-        if request.GET.get('january'):
+        if month == ('一月'):
             start_date = 100 + int(start_date)
             end_date = 100 + int(end_date)
-        elif request.GET.get('february'):
+        elif month == ('二月'):
             start_date = 200 + int(start_date)
             end_date = 200 + int(end_date)
-        elif request.GET.get('march'):
+        elif month == ('三月'):
             start_date = 300 + int(start_date)
             end_date = 300 + int(end_date)
-        elif request.GET.get('april'):
+        elif month == ('四月'):
             start_date = 400 + int(start_date)
             end_date = 400 + int(end_date)
-        elif request.GET.get('may'):
+        elif month == ('五月'):
             start_date = 500 + int(start_date)
             end_date = 500 + int(end_date)
-        elif request.GET.get('june'):
+        elif month == ('六月'):
             start_date = 600 + int(start_date)
             end_date = 600 + int(end_date)
-        elif request.Get.get('january') and request.Get.get('february'):
+        elif month == ('所有'):
             start_date = 100 + int(start_date)
-            end_date = 200 + int(end_date)
+            end_date = 600 + int(end_date)
 
-        print(f"start_date: {start_date}, end_date: {end_date}")
+
+        # print(f"start_date: {start_date}, end_date: {end_date}")
             
-        # 確認用戶輸入
-        if not start_date or not end_date:
-            return HttpResponse("Invalid input.")
 
         # 連接MySQL資料庫
         conn = pymysql.connect(
@@ -121,7 +119,7 @@ def draw_bar_chart(request):
     plt.bar(labels, values, edgecolor='black', align='center')
     plt.xlabel('文章類別')
     plt.ylabel('文章數量（篇）')
-    plt.title(f'PTT八卦版 {start_date}-{end_date}文章類別分布')
+    plt.title(f'PTT八卦版 {month}文章類別長條圖')
     
     file_name = f"plot_{datetime.now().strftime('%Y%m%d')}.png"
     file_path =os.getcwd() + '/mytestweb/static/matplotlib_file/' + file_name
