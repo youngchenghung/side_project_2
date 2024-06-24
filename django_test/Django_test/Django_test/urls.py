@@ -16,16 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from mytestweb.views import index, page_2, insert_data, search_title, search_bar, get_bar_result, search_heatmap, get_heatmap_result, search_keyword, get_pie_result
+from mytestweb.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index),
-    path('page_2/', page_2),
-    # path('page_3/', page_3),
-    # path('page_4/', page_4),
-    path('insert_data/' , insert_data, name='insert_data'),
-    path('search_title/', search_title, name='search_title'),
+    path('create_account_page/', create_account_page, name='create_account_page'),
+    path('post_create_account/', post_create_account, name='post_create_account'),
+    path('create_account_success/', post_create_account, name='create_account_success'),
+    path('home_page_logged/', home_page_logged, name='home_paged_logged'),
+    path('sign_in_success/', sign_in_success, name='sign_in_success'),
     path('search_bar/', search_bar, name='search_bar'),
     path('get_bar_result/', get_bar_result, name='get_bar_result'),
     path('search_heatmap/', search_heatmap, name='search_heatmap'),

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+}
+
+header {
+  background-color: #0c0a66;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+}
+nav {
+  background-color: #626262;
+  padding: 10px;
+}
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+nav ul li {
+  display: inline;
+  margin-right: 20px;
+}
+main {
+  padding: 20px;
+  background-color: #000000;
+}
+section {
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #444;  /* 設置 section 背景顏色 */
+    color: #fff;  /* 設置文字顏色 */
+    width: 100%;
+}
+footer {
+  background-color: #000000;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+</style>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PTT 八卦版數據分析</title>
+</head>
+<body>
+  <header>
+    <h1>首頁</h1>
+  </header>
+  <nav>
+    <font color="white">
+    <ul>
+      <li><a href="/" title="PTT 八卦版數據分析">介紹</a></li>
+    </ul>
+    </font>
+  </nav>
+  <main>
+    <section>
+      <p><font color="gray">
+        <h1>註冊帳號看更多</h1>
+        <form method="POST" action="/post_create_account/">
+            {% csrf_token %}
+            <label for="name">姓名:</label>
+            <input type="text" id="name" name="name">
+            <p></p>
+            <label for="sex">性別:</label>
+            <input type="text" id="sex" name="sex">
+            <p></p>
+            <label for="age">年齡:</label>
+            <input type="text" id="age" name="age">
+            <p></p>
+            <label for="email">信箱:</label>
+            <input type="text" id="email" name="email">
+            <p></p>
+            <label for="password">密碼:</label>
+            <input type="password" id="password" name="password">
+            <p></p>
+            <button type="submit">提交</button>
+    </font></p>
+    </section>
+  </main>
+    <p>
+    <br>
+    <footer>
+      <a href="/create_account_page" title="註冊帳號看更多">註冊帳號看更多</a>
+      <br>
+      <label for="acount_id">帳號:</label>
+      <input type="text" id="acount_id" name="acount_id">
+      <label for="account_password">密碼:</label>
+      <input type="text" id="account_password" name="account_password">
+      <button type="submit">送出</button>
+    </footer>
+</body>
+</html>

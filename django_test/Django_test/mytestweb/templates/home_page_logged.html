@@ -1,70 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<style>
-body {
-  font-family: Arial, sans-serif;
-  line-height: 1.6;
-  margin: 0;
-  padding: 0;
-}
-header {
-  background-color: #0c0a66;
-  color: #fff;
-  padding: 10px;
-  text-align: center;
-}
-nav {
-  background-color: #626262;
-  padding: 10px;
-}
-nav ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  text-align: center;
-}
-nav ul li {
-  display: inline;
-  margin-right: 20px;
-}
-main {
-  padding: 20px;
-  background-color: #000000;
-}
-section {
-  margin-bottom: 20px;
-  padding: 10px;
-  background-color: #232323;
-  text-align: left;
-  width: 60%;
-  margin: auto;
-}
-footer {
-  background-color: #000000;
-  color: #fff;
-  padding: 10px;
-  text-align: center;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-}
-</style>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PTT 八卦版數據分析</title>
-</head>
-<body>
-  <header>
-    <h1>PTT 數據分析</h1>
-  </header>
-  <nav>
-    <font color="white">
-    <ul>
-      <li><a href="/" title="PTT 八卦版數據分析">介紹</a></li>
-    </ul>
-    </font>
-  </nav>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
   <main>
     <section>
       <p><font color="gray">
@@ -117,19 +54,4 @@ footer {
     </font></p>
     </section>
   </main>
-    <p>
-    <br>
-    <footer>
-      <a href="/create_account_page" title="註冊帳號看更多">註冊帳號看更多</a>
-      <br>
-      <form method="POST" action="/sign_in_success/">
-        {% csrf_token %}
-        <label for="email">信箱:</label>
-        <input type="text" id="email" name="email">
-        <label for="password">密碼:</label>
-        <input type="text" id="password" name="password">
-        <button type="submit">送出</button>
-      </form>
-    </footer>
-</body>
-</html>
+{% endblock %}

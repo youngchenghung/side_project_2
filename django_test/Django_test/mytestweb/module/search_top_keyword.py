@@ -14,13 +14,33 @@ from collections import Counter
 
 
 def draw_pie_chart(request):
+
     if request.method == 'GET':
         start_date = request.GET.get('start_date')
         end_date = request.GET.get('end_date')
+        month = request.GET.get('month')
 
-        # 確認用戶輸入
-        if not start_date or not end_date:
-            return HttpResponse("Invalid input.")
+        if month == ('一月'):
+            start_date = 100 + int(start_date)
+            end_date = 100 + int(end_date)
+        elif month == ('二月'):
+            start_date = 200 + int(start_date)
+            end_date = 200 + int(end_date)
+        elif month == ('三月'):
+            start_date = 300 + int(start_date)
+            end_date = 300 + int(end_date)
+        elif month == ('四月'):
+            start_date = 400 + int(start_date)
+            end_date = 400 + int(end_date)
+        elif month == ('五月'):
+            start_date = 500 + int(start_date)
+            end_date = 500 + int(end_date)
+        elif month == ('六月'):
+            start_date = 600 + int(start_date)
+            end_date = 600 + int(end_date)
+        elif month == ('所有'):
+            start_date = 100 + int(start_date)
+            end_date = 600 + int(end_date)
 
         # 連接MySQL資料庫
         conn = pymysql.connect(
@@ -120,7 +140,7 @@ def draw_pie_chart(request):
 
 
     plt.axis('equal')                                          # 使圓餅圖比例相等
-    plt.title("Top 10 keyword in PTT", {"fontsize" : 20})  # 設定標題及其文字大小
+    plt.title(f"{month}份在PTT前10熱門關鍵字", {"fontsize" : 20})  # 設定標題及其文字大小
     plt.legend(loc = "best")                                   # 設定圖例及其位置為最佳
     plt.show()
 

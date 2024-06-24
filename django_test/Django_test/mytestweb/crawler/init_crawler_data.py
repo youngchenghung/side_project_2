@@ -215,6 +215,50 @@ def get_raw_data():
         conn.close()
         print("Database connection closed")
 
+def create_user_account():
+    try:
+        # 連線資料庫
+        conn = pymysql.connect(
+            host='localhost',
+            user='root',
+            password='11111111',
+            port=3306
+            )
+
+        cursor = conn.cursor()
+        print("Connected to the database")
+
+        # 建立資料庫
+        cursor.execute("CREATE DATABASE IF NOT EXISTS PTT_raw_data")
+        print("Database created successfully")
+
+        # 使用資料庫
+        cursor.execute("USE PTT_raw_data")
+        print("Using database PTT_raw_data")
+
+        # 建立資料表
+        create_user_account_query = ("CREATE TABLE IF NOT EXISTS PTT_user_account ("
+                                     "ID INT AUTO_INCREMENT PRIMARY KEY,"
+                                        "name VARCHAR(255),"
+                                        "sex VARCHAR(10),"
+                                        "age INT,"
+                                        "email VARCHAR(255),"
+                                        "password VARCHAR(255)"
+                                    ")")
+                            
+
+        cursor.execute(create_user_account_query)
+        print("Table created successfully")
+
+    except Exception as e:
+        print(f"Error connecting to the database: {e}")
+
+    finally:
+        # 關閉資料庫連線
+        cursor.close()
+        conn.close()
+        print("Database connection closed")
 
 if __name__ == '__main__':
     get_raw_data()
+    create_user_account()

@@ -9,41 +9,17 @@ from mytestweb.module import search_category_bar, search_article_count, search_t
 def index(request):
     return render(request, 'home_page.html')
 
-def page_2(request):
-    return render(request, 'page_2.html')  
+def create_account_page(request):
+    return render(request, 'create_account_page.html')
 
-def insert_data(request):
-    # 請求方法為GET時，取得前端傳來的資料
-    if request.method == 'GET':
-        category = request.GET.get('category')
-        title = request.GET.get('title')
-        pop = request.GET.get('pop')
-        author = request.GET.get('author')
-        date = request.GET.get('date')
-        current_page_index = request.GET.get('current_page_index')
-        print(f"category: {category}, title: {title}, pop: {pop}, author: {author}, date: {date}, current_page_index: {current_page_index}")
-        
-        # 連接MySQL資料庫
-        conn = pymysql.connect(host='localhost', user='root', password='11111111', db='PTT_raw_data')
+def post_create_account(request):
 
-        try:
-            with conn.cursor() as cursor:
-                sql = """INSERT INTO PTT_Gossiping_data (category, title, pop, author, date, current_page_index) VALUES (%s, %s, %s, %s, %s, %s)"""
-                cursor.execute(sql, (category, title, pop, author, date, current_page_index))
-                conn.commit()
-            return HttpResponse("Data inserted successfully!")
-        except Exception as e:
-            return HttpResponse(f"An error occurred: {e}")
-        finally:
-            conn.close()
-    else:
-        return HttpResponse("Invalid request method.")
-
-
-def search_title(request):
-    if request.method == 'GET':
-        title = request.GET.get('title')
-        print(f"title: {title}")
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        sex = request.POST.get('sex')
+        age = request.POST.get('age')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
 
         # 連接MySQL資料庫
         conn = pymysql.connect(
@@ -55,22 +31,57 @@ def search_title(request):
             cursorclass=pymysql.cursors.DictCursor
         )
 
-        try:
-            with conn.cursor() as cursor:
-                sql = """SELECT * FROM PTT_Gossiping_data WHERE Title LIKE %s"""
-                value = "%" + title + "%"
-                cursor.execute(sql, (value,))
-                result = cursor.fetchall()
-                print(result)  # 確認是否有數據
+        # 插入數據到數據庫
+        with conn.cursor() as cursor:
+            sql = """
+                INSERT INTO PTT_user_account (name, sex, age, email, password) 
+                VALUES (%s, %s, %s, %s, %s)
+            """
+            cursor.execute(sql, (name, sex, age, email, password))
+            conn.commit()
 
-            return render(request, 'search_title.html', {'results': result})
-        except Exception as e:
-            return HttpResponse(f"An error occurred: {e}")
-        finally:
-            conn.close()
+        return render(request, 'create_account_success.html')
     else:
-        return HttpResponse("Invalid request method.")
+        return render(request, 'create_account_page.html')
 
+def home_page_logged(request):
+    return render(request, 'home_page_logged.html')
+
+def sign_in_success(request):
+    
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        # print(email, password)
+
+        # 連接MySQL資料庫
+        conn = pymysql.connect(
+            host='localhost',
+            user='root',
+            password='11111111',
+            db='PTT_raw_data',
+            charset='utf8mb4',
+            cursorclass=pymysql.cursors.DictCursor
+        )
+
+        with conn.cursor() as cursor:
+            sql = """SELECT email, password FROM PTT_user_account WHERE email = %s"""
+            cursor.execute(sql, (email))
+            conn.commit()
+            data = cursor.fetchall()
+
+        # Check if the user exists
+        if data is None or len(data) == 0:
+            return 'Invalid email or password'
+        else:
+            user = data[0]
+            print(user)
+
+            # Check if the password is correct
+            if user['password'] != password:
+                return 'Invalid email or password'
+            else:
+                return render(request, 'sign_in_success.html')
 
 def search_bar(request):
     return render(request, 'search_bar.html')

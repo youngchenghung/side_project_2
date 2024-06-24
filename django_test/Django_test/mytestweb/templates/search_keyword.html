@@ -2,25 +2,65 @@
 {% load static %}
 
 {% block content %}
-  
-  <main>
-    <section>
-      <h2>主題區塊二</h2>
-      <p>這是主題區塊二的內容。</p>
+<main>
+  <section>
+    <p><font color="gray">
+    <h2>百分比餅圖</h2>
+    <hr>
+    <br
+    <p>日期與發文數量分析:</p>
+    <ul>
+      <li>首先，我們從大量的文章標題和內容中提取出關鍵字，然後統計這些關鍵字的出現頻次。這樣我們可以識別出哪些關鍵字最常被提及，反映出用戶關心的熱門話題。</li>
+      <li>根據蒐集到的數據，我們可以製作以下百分比餅圖，展示重複關鍵字的分佈情況。</li>
+    </ul>
+    <br>
+    <br>
+    <img src="{% static 'matplotlib_file/pie_result_simple.png' %}" alt="heatmap chart">
+    <br>
+    <br>
+    <p>這張百分比餅圖顯示了在八卦版文章中出現頻次最高的幾個關鍵字及其所佔比例。例如，“台灣”佔26.2%，“地震”佔21.2%，“統神”佔10.9%，依此類推。這些數據能幫助我們了解八卦版的主要討論方向和鄉民關心的話題。</p>
+    <br>
+    <br>
+    <h2>結論</h2>
+    <hr>
+    <p>主要討論話題：圖中顯示的關鍵字比例反映了用戶在八卦版上最常討論的話題。例如，“新聞”佔比最高，說明用戶對時事新聞的關注度最高；“八卦”佔比較大，顯示用戶對八卦消息的興趣濃厚。</p>
+    <p>內容創作方向：這些關鍵字的比例可以指引內容創作者和版主制定內容策略。例如，若“新聞”是最常見的關鍵字，則可以考慮多發布相關的新聞討論文章；如果“討論”佔比也很高，則可以鼓勵更多的互動和討論。</p>
+    <p>市場研究：企業和市場研究者可以利用這些數據來分析用戶興趣和需求，進而調整市場營銷策略和產品定位。了解用戶關心的話題有助於制定更有針對性的推廣方案。</p>
+    <p>總之，通過重複關鍵字分析並製作百分比餅圖，我們能夠清晰地了解PTT八卦版中的主要討論內容和用戶關注的熱點，為內容創作、市場研究和運營管理提供有力的數據支持。這些視覺化的數據圖表讓我們能夠更直觀地掌握論壇的動態，進而更有效地滿足用戶需求。</p>
+    <br>
+    <h2>查詢</h2>
+    <hr>
+    <br>
       <form id="search-pie" method="get" action="/get_pie_result/">
-        <label for="start_date">Start Date:</label>
+        <label for="month">月份:</label>
+        <select name="month" id="month">
+            <option value="所有">所有</option>
+            <option value="一月">一月</option>
+            <option value="二月">二月</option>
+            <option value="三月">三月</option>
+            <option value="四月">四月</option>
+            <option value="五月">五月</option>
+            <option value="六月">六月</option>
+        </select>
+        <br>
+        <br>
+        <label for="start_date">起始日:</label>
         <input type="text" id="start_date" name="start_date">
-        <label for="end_date">End Date:</label>
+        <br>
+        <br>
+        <label for="end_date">結束日:</label>
         <input type="text" id="end_date" name="end_date">
-        <button type="submit">Submit</button>
-    </form>
-
+        <br>
+        <br>
+        <button type="submit">送出</button>
+        </font></p>
+      </form>
     <div id="pie-container">
         {% if file_url %}
             <img id="pie-image" src="{{ file_url }}" alt="pie image">
         {% endif %}
     </div>
-    </section>
-  </main>
+  </section>
+</main>
   
 {% endblock %}
