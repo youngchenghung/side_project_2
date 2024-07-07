@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from mytestweb.views import index, create_account_page, post_create_account, home_page_logged, sign_in_success, search_bar, get_bar_result, search_heatmap, get_heatmap_result, search_keyword, get_pie_result
+from mytestweb.views import index, create_account_page, post_create_account, home_page_logged, sign_in_success, search_bar, get_bar_result, search_heatmap, get_heatmap_result, search_keyword, get_pie_result, orm, orm_info_list, orm_user_add, orm_user_info_list, orm_user_delete
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -32,4 +32,10 @@ urlpatterns = [
     path('get_heatmap_result/', get_heatmap_result, name='get_heatmap_result'),
     path('search_keyword/', search_keyword, name='search_keyword'),
     path('get_pie_result/', get_pie_result, name='get_pie_result'),
+
+    path('orm/', orm, name='orm'),
+    path('orm/info_list/', orm_info_list, name='orm_info_list'),
+    path('orm/user_info_list/', orm_user_info_list, name='orm_user_info_list'),
+    path('orm/user_add/', orm_user_add, name='orm_user_add'),
+    path('orm/user_delete/', orm_user_delete, name='orm_user_delete'),
 ]

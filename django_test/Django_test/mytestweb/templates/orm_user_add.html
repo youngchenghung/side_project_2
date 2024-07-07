@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ORM User Add</title>
+</head>
+<body>
+    <h1>ORM USER ADD</h1>
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="user_name" placeholder="User Name">
+        <input type="text" name="user_password" placeholder="User Password">
+        <input type="'text" name="user_age" placeholder="User Age">
+        <input type="submit" value="Add User">
+    </form>
+</body>

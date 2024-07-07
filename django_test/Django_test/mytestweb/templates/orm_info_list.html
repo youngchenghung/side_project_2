@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ORM Info List</title>
+</head>
+<body>
+    <h1>ORM Info List</h1>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>D_NAME</th>
+            <th>D_MENBER</th>
+        </tr>
+        {% for data in data_list %}
+        <tr>
+            <td>{{ data.id }}</td>
+            <td>{{ data.depart_name }}</td>
+            <td>{{ data.depart_menber }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</html>

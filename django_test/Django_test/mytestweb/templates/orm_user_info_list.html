@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ORM User Info List</title>
+</head>
+<body>
+    <h1>ORM User Info List</h1>
+
+    <a href="/orm/user_add">新增</a>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>User Name</th>
+            <th>User Password</th>
+            <th>User Age</th>
+            <th>Action</th>
+        </tr>
+        {% for data in data_list %}
+        <tr>
+            <td>{{ data.id }}</td>
+            <td>{{ data.name }}</td>
+            <td>{{ data.password }}</td>
+            <td>{{ data.age }}</td>
+            <td>
+                <a href="/orm/user_delete/?user_id={{ data.id }}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</html>

@@ -74,15 +74,15 @@ def get_raw_data():
         print("Connected to the database")
 
         # 建立資料庫
-        cursor.execute("CREATE DATABASE IF NOT EXISTS PTT_raw_data")
+        cursor.execute("CREATE DATABASE IF NOT EXISTS ptt_raw_data")
         print("Database created successfully")
 
         # 使用資料庫
-        cursor.execute("USE PTT_raw_data")
-        print("Using database PTT_raw_data")
+        cursor.execute("USE ptt_raw_data")
+        print("Using database ptt_raw_data")
 
         # 建立資料表
-        create_table_query = ("CREATE TABLE IF NOT EXISTS PTT_Gossiping_data ("
+        create_table_query = ("CREATE TABLE IF NOT EXISTS ptt_Gossiping_data ("
                                 "ID INT AUTO_INCREMENT PRIMARY KEY,"
                                 "Category VARCHAR(10),"
                                 "Title VARCHAR(255),"
@@ -184,14 +184,14 @@ def get_raw_data():
                         continue
 
                     # 日期是102跳出迴圈
-                    if date == 600:
+                    if date == 625:
                         break
 
                     print(f"{title} {pop} {author} {date} {current_index_num}")
 
                     try:
                         # 寫入資料庫
-                        insert_query = ("INSERT INTO PTT_Gossiping_data (Category, Title, Pop, Author, Date, Current_page_index)"
+                        insert_query = ("INSERT INTO ptt_Gossiping_data (Category, Title, Pop, Author, Date, Current_page_index)"
                                 "VALUES (%s, %s, %s, %s, %s, %s)")
                         
                         cursor.execute(insert_query, (category, title, pop, author, date, current_index_num))
@@ -229,12 +229,12 @@ def create_user_account():
         print("Connected to the database")
 
         # 建立資料庫
-        cursor.execute("CREATE DATABASE IF NOT EXISTS PTT_raw_data")
+        cursor.execute("CREATE DATABASE IF NOT EXISTS ptt_raw_data")
         print("Database created successfully")
 
         # 使用資料庫
-        cursor.execute("USE PTT_raw_data")
-        print("Using database PTT_raw_data")
+        cursor.execute("USE ptt_raw_data")
+        print("Using database ptt_raw_data")
 
         # 建立資料表
         create_user_account_query = ("CREATE TABLE IF NOT EXISTS PTT_user_account ("
