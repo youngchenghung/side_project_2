@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ORM Department Add</title>
+</head>
+<body>
+    <h1>ORM Department ADD</h1>
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="depart_name" placeholder="Department Name">
+        <input type="text" name="depart_member" placeholder="Department Member">
+        <input type="submit" value="Add User">
+    </form>
+</body>

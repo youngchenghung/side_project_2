@@ -90,12 +90,31 @@ def orm(reuqest):
 
     return HttpResponse('ORM create table success')
 
-def orm_info_list(request):
+def orm_department_info_list(request):
 
     data_list = Department.objects.all()
     print(data_list)
 
-    return render(request, 'orm_info_list.html', {'data_list': data_list})
+    return render(request, 'orm_department_info_list.html', {'data_list': data_list})
+
+def orm_department_add(request):
+    if request.method == 'GET':
+        return render(request, 'orm_department_add.html')
+
+    depart_name = request.POST.get('depart_name')
+    depart_member = request.POST.get('depart_member')
+
+    Department.objects.create(depart_name=depart_name, depart_member=depart_member)
+
+    return redirect('orm_department_info_list')
+
+def orm_department_delete(request):
+    
+    depart_id = request.GET.get('depart_id')
+
+    Department.objects.filter(id=depart_id).delete()
+
+    return redirect('orm_department_info_list')
 
 def orm_user_info_list(request):
 
@@ -110,14 +129,20 @@ def orm_user_add(request):
     user_name = request.POST.get('user_name')
     user_password = request.POST.get('user_password')
     user_age = request.POST.get('user_age')
+    user_account = request.POST.get('user_account')
+    user_gender = request.POST.get('user_gender')
 
-    UserInfo.objects.create(name=user_name, password=user_password, age=user_age)
+    UserInfo.objects.create(name=user_name, password=user_password, age=user_age, account=user_account, gender=user_gender)
 
     return redirect('/orm/user_info_list')
 
 def orm_user_delete(request):
+    
     user_id = request.GET.get('user_id')
 
     UserInfo.objects.filter(id=user_id).delete()
 
     return redirect('orm_user_info_list')
+
+def test(request):
+    return render(request, 'test.html')

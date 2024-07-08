@@ -39,16 +39,14 @@
     </div>
 </nav>
 <div>
-    <a href="/orm/user_add" class="btn btn-primary">新增</a>
+    <a href="/orm/orm_department_add" class="btn btn-primary">新增</a>
 </div>
 <table class="table">
     <thead>
         <tr>
         <th scope="col">ID</th>
-        <th scope="col">User Name</th>
-        <th scope="col">User Password</th>
-        <th scope="col">User Age</th>
-        <th scope="col">User Gender</th>
+        <th scope="col">Department Name</th>
+        <th scope="col">Department Member</th>
         <th scope="col">Action</th>
         </tr>
     </thead>
@@ -56,12 +54,10 @@
         {% for data in data_list %}
         <tr>
         <td>{{ data.id }}</td>
-        <td>{{ data.name }}</td>
-        <td>{{ data.password }}</td>
-        <td>{{ data.age }}</td>
-        <td>{{ data.gender }}</td>
+        <td>{{ data.depart_name }}</td>
+        <td>{{ data.depart_member }}</td>
         <td>
-            <a href="/orm/user_delete/?user_id={{ data.id}}">Delete</a>
+            <a href="/orm/orm_department_delete/?depart_id={{ data.id }}">Delete</a>
         </td>
         </tr>
         {% endfor %}
