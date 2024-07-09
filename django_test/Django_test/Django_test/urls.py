@@ -16,31 +16,31 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from mytestweb.views import index, create_account_page, post_create_account, home_page_logged, sign_in_success, search_bar, get_bar_result, search_heatmap, get_heatmap_result, search_keyword, get_pie_result, orm, orm_user_add, orm_user_info_list, orm_user_delete, orm_department_add, orm_department_info_list, orm_department_delete, orm_department_add
-
+from mytestweb import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index),
-    path('create_account_page/', create_account_page, name='create_account_page'),
-    path('post_create_account/', post_create_account, name='post_create_account'),
-    path('create_account_success/', post_create_account, name='create_account_success'),
-    path('home_page_logged/', home_page_logged, name='home_paged_logged'),
-    path('sign_in_success/', sign_in_success, name='sign_in_success'),
-    path('search_bar/', search_bar, name='search_bar'),
-    path('get_bar_result/', get_bar_result, name='get_bar_result'),
-    path('search_heatmap/', search_heatmap, name='search_heatmap'),
-    path('get_heatmap_result/', get_heatmap_result, name='get_heatmap_result'),
-    path('search_keyword/', search_keyword, name='search_keyword'),
-    path('get_pie_result/', get_pie_result, name='get_pie_result'),
+    path('', views.index),
+    path('create_account_page/', views.create_account_page, name='create_account_page'),
+    path('post_create_account/', views.post_create_account, name='post_create_account'),
+    path('create_account_success/', views.post_create_account, name='create_account_success'),
+    path('home_page_logged/', views.home_page_logged, name='home_paged_logged'),
+    path('sign_in_success/', views.sign_in_success, name='sign_in_success'),
+    path('search_bar/', views.search_bar, name='search_bar'),
+    path('get_bar_result/', views.get_bar_result, name='get_bar_result'),
+    path('search_heatmap/', views.search_heatmap, name='search_heatmap'),
+    path('get_heatmap_result/', views.get_heatmap_result, name='get_heatmap_result'),
+    path('search_keyword/', views.search_keyword, name='search_keyword'),
+    path('get_pie_result/', views.get_pie_result, name='get_pie_result'),
 
-    path('orm/', orm, name='orm'),
+    path('orm/', views.orm, name='orm'),
 
-    path('orm/user_info_list/', orm_user_info_list, name='orm_user_info_list'),
-    path('orm/user_add/', orm_user_add, name='orm_user_add'),
-    path('orm/user_delete/', orm_user_delete, name='orm_user_delete'),
+    path('orm/user_info_list/', views.orm_user_info_list, name='orm_user_info_list'),
+    path('orm/user_add/', views.orm_user_add, name='orm_user_add'),
+    path('orm/user_delete/', views.orm_user_delete, name='orm_user_delete'),
 
-    path('orm/orm_department_info_list/', orm_department_info_list, name='orm_department_info_list'),
-    path('orm/orm_department_add/', orm_department_add, name='orm_department_add'),
-    path('orm/orm_department_delete/', orm_department_delete, name='orm_department_delete'),
+    path('orm/orm_department_info_list/', views.orm_department_info_list, name='orm_department_info_list'),
+    path('orm/orm_department_add/', views.orm_department_add, name='orm_department_add'),
+    path('orm/orm_department_edit/<int:nid>/', views.orm_department_edit, name='orm_department_edit'),
+    path('orm/orm_department_delete/', views.orm_department_delete, name='orm_department_delete'),
 ]

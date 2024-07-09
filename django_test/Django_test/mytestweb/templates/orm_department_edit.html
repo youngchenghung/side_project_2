@@ -5,19 +5,19 @@
     <div class="container">
         <div class="panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Department Information</h1>
+                <h3 class="panel-title">Department Information Edit</h1>
             </div>
             <div class="panel-body">
                 <form method="post">
                     {% csrf_token %}
                     <div class="mb-3">
-                      <label class="form-label">Department Name</label>
-                      <input type="text" class="form-control" name="depart_name">
+                      <label class="form-label">Edit Department Name</label>
+                      <input type="text" class="form-control" name="depart_name" value="{{ depart_name }}">
                       <div id="contentHelp" class="form-text">Input the department name.</div>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Department Member</label>
-                        <input type="text" class="form-control" name="depart_member" aria-describedby="contentHelp">
+                        <label class="form-label">Edit Department Member</label>
+                        <input type="text" class="form-control" name="depart_member" value="{{ depart_member }}">
                         <div id="contentHelp" class="form-text">Input the department member count.</div>
                     </div>
                     <button type="Submit" class="btn btn-primary">Submit</button>

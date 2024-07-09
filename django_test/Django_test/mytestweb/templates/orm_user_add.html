@@ -1,18 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>ORM User Add</title>
-</head>
-<body>
-    <h1>ORM USER ADD</h1>
-    <form method="post">
-        {% csrf_token %}
-        <input type="text" name="user_name" placeholder="User Name">
-        <input type="text" name="user_password" placeholder="User Password">
-        <input type="text" name="user_age" placeholder="User Age">
-        <input type="text" name="user_account" placeholder="User Account">
-        <input type="text" name="user_gender" placeholder="User Gender">
-        <input type="submit" value="Add User">
-    </form>
+{% extends 'orm_base.html' %}
+
+{% block content %}
+<div>
+    <div class="container">
+        <div class="panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">USER ADD</h1>
+            </div>
+            <div class="panel-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                      <label class="form-label">User Name</label>
+                      <input type="text" class="form-control" name="user_name">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">User Password</label>
+                        <input type="text" class="form-control" name="user_password">
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label">User Age</label>
+                        <input type="text" class="form-control" name="user_age">
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label">User Account</label>
+                        <input type="text" class="form-control" name="user_account">
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label">User Create Time</label>
+                        <input type="text" class="form-control" name="user_create_time">
+                        <div id="contentHelp" class="form-text">Input data format ex.YY-MM-DD.</div>
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label">User Gender</label>
+                        <select class="form-control" name="user_gender">
+                            {% for item in gender_choices %}
+                                <option value="{{ item.0 }}">{{ item.1 }}</option>
+                            {% endfor %}
+                        </select>
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label">Department Name</label>
+                        <select class="form-control" name="id">
+                            {% for item in depart_list %}
+                                <option value="{{ item.id }}">{{ item.depart_name }}</option>
+                            {% endfor %}
+                        </select>
+                        <button type="Submit" class="btn btn-primary">Submit</button>
+                      </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
+{% endblock %}
