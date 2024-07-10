@@ -2,12 +2,14 @@
 
 {% block content %}
 <div>
+    <p></p>
     <div class="container">
-        <div class="panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Department Information Edit</h1>
-            </div>
-            <div class="panel-body">
+        <div style="margin-bottom: 20px;">
+            <a href="/orm/orm_department_info_list/" class="btn btn-secondary">返回</a>
+        </div>
+          <div class="card">
+            <h5 class="card-header">修改PTT部門資料</h5>
+            <div class="card-body">
                 <form method="post">
                     {% csrf_token %}
                     <div class="mb-3">
@@ -20,7 +22,7 @@
                         <input type="text" class="form-control" name="depart_member" value="{{ depart_member }}">
                         <div id="contentHelp" class="form-text">Input the department member count.</div>
                     </div>
-                    <button type="Submit" class="btn btn-primary">Submit</button>
+                    <button type="Submit" class="btn btn-primary">修改</button>
                 </form>
             </div>
         </div>

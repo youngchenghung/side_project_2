@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>ORM Login</title>
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-5.3.3/css/bootstrap.css' %}">
+    <style>
+        .account{
+            width: 400px;
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+            box-shadow: 5px 5px 20px #aaa;
+
+            margin: auto;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 100px;
+            padding: 20px 40px;
+        }
+
+        .account h2 {
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="account">
+        <h2>Create Admin Account</h2>
+        <form method="post" novalidate>
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="admin_name" class="form-label">Admin Name</label>
+                {{ form.admin_name }}
+                <span class="text-danger">{{ form.admin_username.errors.0 }}</span>
+            </div>
+            <div class="mb-3">
+                <label for="admin_password" class="form-label">Admin Password</label>
+                {{ form.admin_password }}
+                <span class="text-danger">{{ form.admin_password.errors.0 }}</span>
+            </div>
+            <button type="submit" class="btn btn-primary">Create</button>
+        </form>
+        <br>
+        <a href="/login/" class="btn btn-secondary">Back</a>
+    </div>
+</body>
+</html>

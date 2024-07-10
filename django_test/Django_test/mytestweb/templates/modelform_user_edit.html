@@ -1,0 +1,30 @@
+{% extends 'orm_base.html' %}
+
+{% block content %}
+<div>
+    <p></p>
+    <div class="container">
+        <div style="margin-bottom: 20px;">
+            <a href="/orm/user_info_list" class="btn btn-secondary">返回</a>
+        </div>
+          <div class="card">
+            <h5 class="card-header">ModelForm修改PTT員工資料</h5>
+            <div class="card-body">
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="form-group">
+                        <label>{{ field.label }}</label>
+                            {{ field }}
+                            <span style="color: red;">{{ field.errors.0 }}</span>
+                        </div>
+                    {% endfor %}
+                    <br>
+                    <button type="Submit" class="btn btn-primary">修改</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+{% endblock %}

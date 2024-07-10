@@ -5,9 +5,12 @@
     <p></p>
     <div class="container">
         <div style="margin-bottom: 20px;">
-            <h1 class="panel-title">用户信息
             <a href="/orm/user_add" class="btn btn-primary">新增</a>
+            <a href="/orm/modelform_add_user/" class="btn btn-primary">ModelForm新增</a>
         </div>
+        <div class="card">
+            <h5 class="card-header">PTT員工資料</h5>
+            <div class="card-body">
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -34,7 +37,8 @@
                 <td>{{ data.get_gender_display }}</td>
                 <td>{{ data.depart_foreignkey.depart_name }}</td>
                 <td>
-                    <a href="/orm/user_delete/?user_id={{ data.id}}">Delete</a>
+                    <a class="btn btn-secondary" href="/orm/modelform_user_edit/{{ data.id }}">Edit</a>
+                    <a class="btn btn-danger" href="/orm/user_delete/?user_id={{ data.id }}">Delete</a>
                 </td>
                 </tr>
                 {% endfor %}
@@ -42,4 +46,7 @@
         </table>
     </div>
 </div>
+    </div>
+</div>
+
 {% endblock %}

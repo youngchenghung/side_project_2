@@ -48,6 +48,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'mytestweb.module.auth_middleware.AuthMiddleware',
 ]
 
 ROOT_URLCONF = 'Django_test.urls'
@@ -133,9 +134,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 # Add this below line in settings.py
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
+# STATICFILES_DIRS = [
+#     BASE_DIR / "static",
+# ]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

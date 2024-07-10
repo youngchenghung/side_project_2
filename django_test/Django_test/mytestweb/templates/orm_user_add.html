@@ -2,57 +2,59 @@
 
 {% block content %}
 <div>
-    <div class="container">
-        <div class="panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">USER ADD</h1>
-            </div>
-            <div class="panel-body">
-                <form method="post">
-                    {% csrf_token %}
-                    <div class="mb-3">
-                      <label class="form-label">User Name</label>
-                      <input type="text" class="form-control" name="user_name">
+  <p></p>
+  <div class="container">
+      <div style="margin-bottom: 20px;">
+          <a href="/orm/user_info_list" class="btn btn-secondary">返回</a>
+      </div>
+        <div class="card">
+          <h5 class="card-header">新增PTT員工資料</h5>
+          <div class="card-body">
+              <form method="post">
+                  {% csrf_token %}
+                  <div class="mb-3">
+                    <label class="form-label">User Name</label>
+                    <input type="text" class="form-control" name="user_name">
+                  </div>
+                  <div class="mb-3">
+                      <label class="form-label">User Password</label>
+                      <input type="text" class="form-control" name="user_password">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">User Password</label>
-                        <input type="text" class="form-control" name="user_password">
-                      </div>
-                      <div class="mb-3">
-                        <label class="form-label">User Age</label>
-                        <input type="text" class="form-control" name="user_age">
-                      </div>
-                      <div class="mb-3">
-                        <label class="form-label">User Account</label>
-                        <input type="text" class="form-control" name="user_account">
-                      </div>
-                      <div class="mb-3">
-                        <label class="form-label">User Create Time</label>
-                        <input type="text" class="form-control" name="user_create_time">
-                        <div id="contentHelp" class="form-text">Input data format ex.YY-MM-DD.</div>
-                      </div>
-                      <div class="mb-3">
-                        <label class="form-label">User Gender</label>
-                        <select class="form-control" name="user_gender">
-                            {% for item in gender_choices %}
-                                <option value="{{ item.0 }}">{{ item.1 }}</option>
-                            {% endfor %}
-                        </select>
-                      </div>
-                      <div class="mb-3">
-                        <label class="form-label">Department Name</label>
-                        <select class="form-control" name="id">
-                            {% for item in depart_list %}
-                                <option value="{{ item.id }}">{{ item.depart_name }}</option>
-                            {% endfor %}
-                        </select>
-                        <button type="Submit" class="btn btn-primary">Submit</button>
-                      </div>
+                      <label class="form-label">User Age</label>
+                      <input type="text" class="form-control" name="user_age">
                     </div>
-                </form>
-            </div>
-        </div>
+                    <div class="mb-3">
+                      <label class="form-label">User Account</label>
+                      <input type="text" class="form-control" name="user_account">
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">User Create Time</label>
+                      <input type="text" class="form-control" name="user_create_time">
+                      <div id="contentHelp" class="form-text">Input data format ex.YY-MM-DD.</div>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">User Gender</label>
+                      <select class="form-control" name="user_gender">
+                          {% for item in gender_choices %}
+                              <option value="{{ item.0 }}">{{ item.1 }}</option>
+                          {% endfor %}
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Department Name</label>
+                      <select class="form-control" name="id">
+                          {% for item in depart_list %}
+                              <option value="{{ item.id }}">{{ item.depart_name }}</option>
+                          {% endfor %}
+                      </select>
+                      <br>
+                      <button type="Submit" class="btn btn-primary">新增</button>
+                    </div>
+                  </div>
+              </form>
+          </div>
+      </div>
     </div>
-</div>
 </body>
 {% endblock %}

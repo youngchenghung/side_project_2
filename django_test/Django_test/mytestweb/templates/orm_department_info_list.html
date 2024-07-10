@@ -5,9 +5,11 @@
     <p></p>
     <div class="container">
         <div style="margin-bottom: 20px;">
-            <h1 class="panel-title">部門資料
-            <a href="/orm/orm_department_add" class="btn btn-primary">新增</a>
+            <a href="/orm/orm_department_add" class="btn btn-secondary">新增</a>
         </div>
+          <div class="card">
+            <h5 class="card-header">PTT部門資料</h5>
+            <div class="card-body">
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -24,8 +26,8 @@
                 <td>{{ data.depart_name }}</td>
                 <td>{{ data.depart_member }}</td>
                 <td>
-                    <a class="btn btn-primary" href="/orm/orm_department_edit/{{ data.id }}">Edit</a>
-                    <a class="btn btn-primary" href="/orm/orm_department_delete/?depart_id={{ data.id }}">Delete</a>
+                    <a class="btn btn-secondary" href="/orm/orm_department_edit/{{ data.id }}">Edit</a>
+                    <a class="btn btn-danger" href="/orm/orm_department_delete/?depart_id={{ data.id }}">Delete</a>
                 </td>
                 </tr>
                 {% endfor %}

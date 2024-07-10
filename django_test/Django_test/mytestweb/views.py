@@ -121,7 +121,6 @@ def orm_department_edit(request, nid):
 
     return redirect('orm_department_info_list')
 
-
 def orm_department_delete(request):
     
     depart_id = request.GET.get('depart_id')
@@ -172,5 +171,117 @@ def orm_user_delete(request):
 
     return redirect('orm_user_info_list')
 
-def test(request):
-    return render(request, 'test.html')
+from django import forms
+from mytestweb.module.encrypt_md5 import md5
+
+# 建立類別ModelFormUserInfo，繼承forms.ModelForm
+class ModelFormUserInfo(forms.ModelForm):
+    name = forms.CharField(min_length=1, label='Name')
+    password = forms.CharField(min_length=8, label='Password')
+
+    class Meta:
+        model = models.UserInfo
+        fields = ['name', 'password', 'age', 'account', 'create_time', 'gender', 'depart_foreignkey']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs = {'class': 'form-control', "placeholder": field.label}
+
+# 建立modelform_add_user函數
+def modelform_add_user(request):
+    if request.method == 'GET':
+        form = ModelFormUserInfo()
+        return render(request, 'modelform_add_user.html', {'form': form})
+
+    # 將request.POST資料傳入ModelFormUserInfo
+    form = ModelFormUserInfo(data=request.POST)
+    if form.is_valid():
+        form.save()
+        return redirect('/orm/user_info_list')
+
+    return render(request, 'modelform_add_user.html', {'form': form})
+
+# 建立modelform_user_edit函數
+def modelform_user_edit(request, nid):
+    if request.method == 'GET':
+
+        # 取得資料庫中指定id的欄位資料
+        row_object = models.UserInfo.objects.filter(id=nid).first()
+
+        # 代入instance參數到ModelFormUserInfo
+        form = ModelFormUserInfo(instance=row_object)
+        return render(request, 'modelform_user_edit.html', {'form': form})
+    
+    # 取得資料庫中指定id的欄位資料
+    row_object = models.UserInfo.objects.filter(id=nid).first()
+    
+    # 將request.POST資料傳入ModelFormUserInfo
+    # 代入instance參數到ModelFormUserInfo
+    form = ModelFormUserInfo(data=request.POST, instance=row_object)
+    if form.is_valid():
+        form.save()
+        return redirect('/orm/user_info_list')
+    
+    return render(request, 'modelform_user_edit.html', {'form': form})
+
+
+    
+# 建立類別ModelFormAdminAccount，繼承forms.ModelForm
+class ModelFormAdminAccount(forms.ModelForm):
+    
+    class Meta:
+        model = models.AdminAccount
+        fields = ['admin_name', 'admin_password']
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs = {'class': 'form-control', "placeholder": field.label}
+
+    # 針對password欄位進行MD5加密
+    def clean_admin_password(self):
+        admin_password = self.cleaned_data.get('admin_password')
+        return md5(admin_password)
+    
+# 建立admin_account函數
+def admin_account(request):
+    if request.method == 'GET':
+        form = ModelFormAdminAccount()
+
+        return render(request, 'orm_admin_account.html', {'form': form})
+    
+    # 將request.POST資料傳入ModelFormAdminAccount
+    form = ModelFormAdminAccount(data=request.POST)
+    # 驗證表單是否正確
+    if form.is_valid():
+        form.save()
+        print(form.cleaned_data)
+        return redirect('/login/')
+
+# 建立login函數
+def login(request):
+    if request.method == 'GET':
+        form = ModelFormAdminAccount()
+
+        return render(request, 'orm_login.html', {'form': form})
+    
+    # 將request.POST資料傳入ModelFormAdminAccount
+    form = ModelFormAdminAccount(data=request.POST)
+    if form.is_valid():
+        print(form.cleaned_data)
+
+        # 查詢資料庫中是否有符合的資料
+        check_account = models.AdminAccount.objects.filter(**form.cleaned_data).first()
+        # 如果沒有符合的資料，則顯示錯誤訊息
+        if not check_account:
+            form.add_error("admin_password", 'Account and Password is incorrect')
+            return render(request, 'orm_login.html', {'form': form})
+        
+        # 如果有符合的資料，則將admin_name存入session
+        request.session['info'] = {'admin_name': form.cleaned_data['admin_name']}
+        
+    return redirect('/orm/user_info_list')
+    

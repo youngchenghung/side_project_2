@@ -43,4 +43,10 @@ urlpatterns = [
     path('orm/orm_department_add/', views.orm_department_add, name='orm_department_add'),
     path('orm/orm_department_edit/<int:nid>/', views.orm_department_edit, name='orm_department_edit'),
     path('orm/orm_department_delete/', views.orm_department_delete, name='orm_department_delete'),
+
+    path('orm/modelform_add_user/', views.modelform_add_user, name='modelform_add_user'),
+    path('orm/modelform_user_edit/<int:nid>/', views.modelform_user_edit, name='modelform_user_edit'),
+
+    path('admin_account/', views.admin_account, name='admin_account'),
+    path('login/', views.login, name='login'),
 ]

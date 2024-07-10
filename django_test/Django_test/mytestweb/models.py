@@ -5,6 +5,10 @@ class Department(models.Model):
     depart_name = models.CharField(verbose_name="Department Name", max_length=32)
     depart_member = models.IntegerField(verbose_name="Department Member")
 
+    # 繼承models.Model後，可以使用__str__方法，來定義返回的值
+    def __str__(self):
+        return self.depart_name
+
 # Django ORM (Object Relational Mapping) create table UserInfo
 # 員工表
 class UserInfo(models.Model):
@@ -12,7 +16,7 @@ class UserInfo(models.Model):
     password = models.CharField(verbose_name="Password", max_length=64)
     age = models.IntegerField(verbose_name="Age")
     account = models.DecimalField(verbose_name="Account", max_digits=10, decimal_places=2, default=0)
-    create_time = models.DateTimeField(verbose_name="Create Time")
+    create_time = models.DateField(verbose_name="Create Time")
 
     # 設定資料庫資料為1=Male, 2=Female
     gender_choices = ((1, "Male"),(2, "Female"))
@@ -35,4 +39,6 @@ class UserInfo(models.Model):
 # );
     
 
-
+class AdminAccount(models.Model):
+    admin_name = models.CharField(verbose_name="Admin Account", max_length=32)
+    admin_password = models.CharField(verbose_name="Admin Password" ,max_length=64)
