@@ -20,7 +20,7 @@ from mytestweb import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index),
+    # path('', views.index),
     path('create_account_page/', views.create_account_page, name='create_account_page'),
     path('post_create_account/', views.post_create_account, name='post_create_account'),
     path('create_account_success/', views.post_create_account, name='create_account_success'),
@@ -32,8 +32,6 @@ urlpatterns = [
     path('get_heatmap_result/', views.get_heatmap_result, name='get_heatmap_result'),
     path('search_keyword/', views.search_keyword, name='search_keyword'),
     path('get_pie_result/', views.get_pie_result, name='get_pie_result'),
-
-    path('orm/', views.orm, name='orm'),
 
     path('orm/user_info_list/', views.orm_user_info_list, name='orm_user_info_list'),
     path('orm/user_add/', views.orm_user_add, name='orm_user_add'),
@@ -48,5 +46,6 @@ urlpatterns = [
     path('orm/modelform_user_edit/<int:nid>/', views.modelform_user_edit, name='modelform_user_edit'),
 
     path('admin_account/', views.admin_account, name='admin_account'),
+    path('', views.login, name='login'),
     path('login/', views.login, name='login'),
 ]

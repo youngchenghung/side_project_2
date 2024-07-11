@@ -61,83 +61,69 @@ def get_pie_result(request):
 
 from mytestweb import models
 
-def orm(reuqest):
-    # 新增department表格資料
-    # Department.objects.create(depart_name='IT', depart_menber=10)
-    # Department.objects.create(depart_name='HR', depart_menber=2)
-    # Department.objects.create(depart_name='Sales', depart_menber=5)
+# orm架構創建(create)資料表資料
+def orm_department_add(request):
+    if request.method == 'GET':
+        return render(request, 'orm_department_add.html')
+    
+    # 取得depart_name, depart_member資料
+    depart_name = request.POST.get('depart_name')
+    depart_member = request.POST.get('depart_member')
 
+    # 新增department表格欄位中的depart_name, depart_member資料
+    models.Department.objects.create(depart_name=depart_name, depart_member=depart_member)
 
-    # 刪除department表格id=1的資料
-    # Department.objects.filter(id=1).delete()
+    return redirect('orm_department_info_list')
 
-    # 刪除department table所有資料
-    # Department.objects.all().delete()
-
-    # 查詢department表格所有資料(QureySet資料)
-    # data_list = Department.objects.all()
-    # for data in data_list:
-    #     print(data.depart_name, data.depart_menber)
-
-    # 查詢department表格id=1的資料(QureySet資料)
-    # data_id_1 = Department.objects.filter(id=1)
-    # for data in data_id_1:
-    #     print(data.depart_name, data.depart_menber)
-
-    # 更新department表格id=2的資料
-    # Department.objects.filter(id=2).update(depart_name='HR2',depart_menber=4)
-
-
-    return HttpResponse('ORM create table success')
-
+# orm架構讀取(read)資料表資料
 def orm_department_info_list(request):
 
+    # 查詢department表格所有資料(QureySet資料)
     data_list = models.Department.objects.all()
     print(data_list)
 
     return render(request, 'orm_department_info_list.html', {'data_list': data_list})
 
-def orm_department_add(request):
-    if request.method == 'GET':
-        return render(request, 'orm_department_add.html')
-
-    depart_name = request.POST.get('depart_name')
-    depart_member = request.POST.get('depart_member')
-
-    models.Department.objects.create(depart_name=depart_name, depart_member=depart_member)
-
-    return redirect('orm_department_info_list')
-
+# orm架構更新(update)資料表資料, (nid定義為department表格的id)
 def orm_department_edit(request, nid):
     if request.method == 'GET':
         depart_name = models.Department.objects.get(id=nid).depart_name
         depart_member = models.Department.objects.get(id=nid).depart_member
-        return render(request, 'orm_department_edit.html', {'depart_name': depart_name, 'depart_member': depart_member})
+        return render(request, 'orm_department_edit.html', 
+                      {'depart_name': depart_name, 'depart_member': depart_member}
+                      )
 
-
+    # 取得depart_name, depart_member資料
     depart_name = request.POST.get('depart_name')
     depart_member = request.POST.get('depart_member')
+
+    # 更新department表格id=nid的depart_name, depart_member資料
     models.Department.objects.filter(id=nid).update(depart_name=depart_name, depart_member=depart_member)
 
     return redirect('orm_department_info_list')
 
+# orm架構刪除(delete)資料表資料
 def orm_department_delete(request):
     
+    # 取得depart_id資料
     depart_id = request.GET.get('depart_id')
-
+    
+    # 刪除department表格id=depart_id的資料
     models.Department.objects.filter(id=depart_id).delete()
 
     return redirect('orm_department_info_list')
 
+# orm 架構讀取(Read)資料表資料
 def orm_user_info_list(request):
 
     data_list = models.UserInfo.objects.all()
 
     return render(request, 'orm_user_info_list.html', {'data_list': data_list})
 
+# orm架構創建(create)資料表資料
 def orm_user_add(request):
     if request.method == 'GET':
-
+        # 取得gender_choices, depart_list資料
         context = {
             'gender_choices': models.UserInfo.gender_choices,
             'depart_list': models.Department.objects.all()
@@ -145,6 +131,7 @@ def orm_user_add(request):
 
         return render(request, 'orm_user_add.html', context)
     
+    # 取得name, password, age, account, create, gender, depart_foreignkey_id資料
     name = request.POST.get('user_name')
     password = request.POST.get('user_password')
     age = request.POST.get('user_age')
@@ -153,6 +140,7 @@ def orm_user_add(request):
     gender = request.POST.get('user_gender')
     depart_foreignkey_id = request.POST.get('id')
 
+    # 新增UserInfo表格欄位中的name, password, age, account, create
     models.UserInfo.objects.create(name=name, 
                                    password=password, 
                                    age=age, account=account, 
@@ -163,10 +151,13 @@ def orm_user_add(request):
 
     return redirect('/orm/user_info_list')
 
+# orm架構刪除(delete)資料表資料
 def orm_user_delete(request):
     
+    # 取得user_id資料
     user_id = request.GET.get('user_id')
 
+    # 刪除UserInfo表格id=user_id的資料
     models.UserInfo.objects.filter(id=user_id).delete()
 
     return redirect('orm_user_info_list')
@@ -176,8 +167,8 @@ from mytestweb.module.encrypt_md5 import md5
 
 # 建立類別ModelFormUserInfo，繼承forms.ModelForm
 class ModelFormUserInfo(forms.ModelForm):
-    name = forms.CharField(min_length=1, label='Name')
-    password = forms.CharField(min_length=8, label='Password')
+    name = forms.CharField(min_length=1, label='User Name')
+    password = forms.CharField(min_length=8, label='User Password')
 
     class Meta:
         model = models.UserInfo
@@ -188,6 +179,11 @@ class ModelFormUserInfo(forms.ModelForm):
 
         for name, field in self.fields.items():
             field.widget.attrs = {'class': 'form-control', "placeholder": field.label}
+
+    # 針對password欄位進行MD5加密
+    def clean_password(self):
+        password = self.cleaned_data.get('password')
+        return md5(password)
 
 # 建立modelform_add_user函數
 def modelform_add_user(request):
@@ -219,8 +215,11 @@ def modelform_user_edit(request, nid):
     
     # 將request.POST資料傳入ModelFormUserInfo
     # 代入instance參數到ModelFormUserInfo
+    
     form = ModelFormUserInfo(data=request.POST, instance=row_object)
+
     if form.is_valid():
+        print(form.cleaned_data)
         form.save()
         return redirect('/orm/user_info_list')
     
@@ -283,5 +282,5 @@ def login(request):
         # 如果有符合的資料，則將admin_name存入session
         request.session['info'] = {'admin_name': form.cleaned_data['admin_name']}
         
-    return redirect('/orm/user_info_list')
+    return redirect('/home_page_logged/')
     
